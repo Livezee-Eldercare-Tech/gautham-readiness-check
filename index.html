@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Gautham Hospital — Post-Discharge Readiness Check</title>
+  
+  <!-- External Google Fonts Link from style.md -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Alata&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  
+  <!-- Modular Stylesheets -->
+  <link rel="stylesheet" href="src/css/styles.css">
+</head>
+<body>
+
+  <!-- Header & Hospital Brand (Neutral Clinical Styling) -->
+  <header class="header">
+    <div class="header-container">
+      <div class="header-brand">
+        <div class="org">Gautham Hospital</div>
+        <div class="product">Post-Discharge Readiness Check</div>
+        <div class="tagline">Clinical Care Coordination Pilot</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Offline Sync Banner -->
+    <div class="sync-banner" id="syncBanner">
+      <span>Saved on device (<strong id="pendingCount">0</strong> pending sync)</span>
+      <button type="button" id="retrySyncBtn">Retry Sync</button>
+    </div>
+
+    <!-- Verbatim Consent Line (Section 4 of Build Brief) -->
+    <div class="consent-banner">
+      The information below is collected by Gautham Hospital and shared with its service providers to facilitate the patient’s treatment, recovery support and follow-up care after discharge.
+    </div>
+
+    <!-- Error Alert Box -->
+    <div class="error-box" id="errorBox"></div>
+
+    <!-- Coordinator Form Card -->
+    <div class="card" id="formCard">
+      <div class="card-header">
+        <h3>Inpatient Assessment Form</h3>
+        <span class="badge badge-gold">IP Coordinator Entry</span>
+      </div>
+
+      <div class="card-body">
+        <form id="readinessForm" autocomplete="off">
+
+          <!-- Row: Patient Name & Age (Q1 & Q2) -->
+          <div class="field-row">
+            <div class="field">
+              <label class="fl" for="patientName"><span class="q-num">1.</span> Patient Name</label>
+              <input type="text" id="patientName" name="patientName" placeholder="Full name of patient" required>
+            </div>
+            <div class="field narrow">
+              <label class="fl" for="age"><span class="q-num">2.</span> Age</label>
+              <input type="number" id="age" name="age" min="1" max="125" placeholder="e.g. 68" required>
+            </div>
+          </div>
+
+          <!-- Q3: Room Category -->
+          <div class="field">
+            <label class="fl"><span class="q-num">3.</span> Room Category</label>
+            <div class="options-grid">
+              <label class="opt-card radio">
+                <input type="radio" name="q3" value="General">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">General</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q3" value="Semi-private">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Semi-private</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q3" value="Private">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Private</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q3" value="Deluxe">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Deluxe</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q4: Consulting Doctor & Department -->
+          <div class="field">
+            <label class="fl" for="doctorDept"><span class="q-num">4.</span> Consulting Doctor & Department</label>
+            <input type="text" id="doctorDept" name="doctorDept" placeholder="e.g. Dr. Rajesh Sharma - Cardiology" required>
+          </div>
+
+          <!-- Q5: Reason for this admission -->
+          <div class="field">
+            <label class="fl" for="admissionReason"><span class="q-num">5.</span> Reason for this Admission</label>
+            <input type="text" id="admissionReason" name="admissionReason" placeholder="Primary diagnosis or procedure" required>
+          </div>
+
+          <!-- Q6: Prior admission -->
+          <div class="field">
+            <label class="fl"><span class="q-num">6.</span> Admitted Before for Same / Related Problem</label>
+            <div class="options-grid single-col">
+              <label class="opt-card radio">
+                <input type="radio" name="q6" value="No">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">No</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q6" value="Yes, within 6 months">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Yes, within 6 months</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q6" value="Yes, earlier">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Yes, earlier</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q7: Ongoing conditions (multi-tick) -->
+          <div class="field">
+            <label class="fl"><span class="q-num">7.</span> Ongoing Conditions (Select all that apply)</label>
+            <div class="options-grid">
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q7" value="Diabetes">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Diabetes</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q7" value="BP">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">BP</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q7" value="Heart">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Heart</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q7" value="Kidney">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Kidney</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q7" value="Neuro–stroke">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Neuro–stroke</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q7" value="Memory or confusion">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Memory or confusion</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q7" value="Other">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Other</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q7" value="None">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">None</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q8: Mobility -->
+          <div class="field">
+            <label class="fl"><span class="q-num">8.</span> Mobility</label>
+            <div class="options-grid">
+              <label class="opt-card radio">
+                <input type="radio" name="q8" value="Independent">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Independent</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q8" value="Needs some help">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Needs some help</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q8" value="Needs full help">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Needs full help</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q9: Falls or decline in last 6 months -->
+          <div class="field">
+            <label class="fl"><span class="q-num">9.</span> Falls or Noticeable Decline in Last 6 Months</label>
+            <div class="options-grid">
+              <label class="opt-card radio">
+                <input type="radio" name="q9" value="Yes">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Yes</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q9" value="No">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">No</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q9" value="Not sure">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Not sure</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q10: Doctor's post-discharge instructions (multi-tick) -->
+          <div class="field">
+            <label class="fl"><span class="q-num">10.</span> Doctor’s Post-Discharge Instructions (Select all that apply)</label>
+            <div class="options-grid">
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q10" value="Physio">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Physio</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q10" value="Daily dressing–injections">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Daily dressing–injections</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q10" value="New medicines">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">New medicines</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q10" value="Review visit">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Review visit</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q10" value="Diet changes">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Diet changes</span>
+              </label>
+              <label class="opt-card checkbox">
+                <input type="checkbox" name="q10" value="None yet">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">None yet</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q11: Who will be at home with patient -->
+          <div class="field">
+            <label class="fl"><span class="q-num">11.</span> Who will be at Home with Patient During the Day after Discharge</label>
+            <div class="options-grid single-col">
+              <label class="opt-card radio">
+                <input type="radio" name="q11" value="Spouse only">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Spouse only</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q11" value="Adult child at home">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Adult child at home</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q11" value="Paid caretaker–nurse">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Paid caretaker–nurse</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q11" value="Nobody for parts of the day">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Nobody for parts of the day</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q12: Family outside India -->
+          <div class="field">
+            <label class="fl"><span class="q-num">12.</span> Children or Close Family Outside India</label>
+            <div class="options-grid">
+              <label class="opt-card radio">
+                <input type="radio" name="q12" value="No">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">No</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q12" value="Yes: Gulf">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Yes: Gulf</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q12" value="Yes: US–UK–Europe">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Yes: US–UK–Europe</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q12" value="Yes: other">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Yes: other</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q13: Main decision-maker -->
+          <div class="field">
+            <label class="fl"><span class="q-num">13.</span> Main Decision-Maker</label>
+            <div class="options-grid">
+              <label class="opt-card radio">
+                <input type="radio" name="q13" value="Patient">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Patient</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q13" value="Spouse">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Spouse</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q13" value="Child in India">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Child in India</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q13" value="Child abroad">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Child abroad</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q13" value="Joint">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Joint</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q14: Difficulty managing care at home -->
+          <div class="field">
+            <label class="fl"><span class="q-num">14.</span> Does the Family Expect Difficulty Managing Care at Home?</label>
+            <div class="options-grid">
+              <label class="opt-card radio">
+                <input type="radio" name="q14" value="Yes">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Yes</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q14" value="Somewhat">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Somewhat</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q14" value="No">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">No</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q15: Information about structured recovery support -->
+          <div class="field">
+            <label class="fl"><span class="q-num">15.</span> Would the Family Like Information About Structured Recovery Support at Home?</label>
+            <div class="options-grid">
+              <label class="opt-card radio">
+                <input type="radio" name="q15" value="Yes">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Yes</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q15" value="Maybe">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">Maybe</span>
+              </label>
+              <label class="opt-card radio">
+                <input type="radio" name="q15" value="No">
+                <div class="opt-indicator"></div>
+                <span class="opt-label">No</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Submit CTA -->
+          <button type="submit" class="btn-run" id="submitBtn">Submit Readiness Check</button>
+
+        </form>
+      </div>
+    </div>
+
+    <!-- Coordinator Confirmation View (Section 8: Never shows scores or tiers) -->
+    <div class="confirmation-view" id="confirmationView">
+      <div class="confirm-card">
+        <div class="confirm-icon">✓</div>
+        <h2 class="confirm-title">Recorded</h2>
+        <p class="confirm-sub">The care team will review before discharge.</p>
+        
+        <div>
+          <div class="download-pill">
+            <span>💾</span>
+            <span id="downloadStatusNote">Saved automatically to this device</span>
+          </div>
+        </div>
+
+        <button type="button" class="btn-navy" id="btnNewEntry">Submit Another Response</button>
+      </div>
+    </div>
+
+  </main>
+
+  <script type="module" src="src/js/app.js"></script>
+</body>
+</html>

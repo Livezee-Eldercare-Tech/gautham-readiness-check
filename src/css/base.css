@@ -1,0 +1,27 @@
+/* Global Reset & Base Typography */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Alata', sans-serif;
+  background: var(--dark);
+  min-height: 100vh;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: 40px;
+}
+
+.main {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 20px 16px 60px;
+}
+
+@media (max-width: 580px) {
+  .main {
+    padding: 12px 10px 40px;
+  }
+}

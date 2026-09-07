@@ -1,0 +1,20 @@
+/* LivEzee Luxury Clinical Design System - Variables & Tokens */
+:root {
+  --navy: #1e436c;   /* Primary Brand Navy */
+  --blue: #295c94;   /* Interactive Hover Blue */
+  --dark: #132a44;   /* Deep Page Background */
+  --gold: #c9a84c;   /* Antique Gold Brand Accent & Borders */
+  --warm: #f7f4ef;   /* Warm Cream Paper (Card & Section Backgrounds) */
+  --white: #ffffff;  /* Pure White */
+  --mid: #d4d4d4;    /* Light Neutral Grey for Borders */
+  --text: #2a2a2a;   /* Deep Charcoal Body Text */
+  --muted: #666666;  /* Neutral Secondary Text & Labels */
+
+  /* Clinical Status Colors */
+  --status-emerald: #1a4a2e;
+  --status-green: #1e5c2e;
+  --status-amber: #6b420e;
+  --status-red: #7a1a1a;
+  --status-crimson: #c0392b;
+  --status-info: #1e3a56;
+}
