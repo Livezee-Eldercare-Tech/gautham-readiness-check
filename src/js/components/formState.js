@@ -77,15 +77,19 @@ export function initOptionCardHandlers() {
 export function extractFormAnswers() {
   const patientName = document.getElementById('patientName').value.trim();
   const age = document.getElementById('age').value.trim();
+  const gender = document.getElementById('gender')?.value || '';
   const q3 = document.querySelector('input[name="q3"]:checked')?.value || '';
   const doctorDept = document.getElementById('doctorDept').value.trim();
   const admissionReason = document.getElementById('admissionReason').value.trim();
   const q6 = document.querySelector('input[name="q6"]:checked')?.value || '';
   
   const q7Checked = Array.from(document.querySelectorAll('input[name="q7"]:checked')).map(i => i.value);
+  const q7Notes = document.getElementById('q7Notes')?.value.trim() || '';
   const q8 = document.querySelector('input[name="q8"]:checked')?.value || '';
   const q9 = document.querySelector('input[name="q9"]:checked')?.value || '';
+  const q9Notes = document.getElementById('q9Notes')?.value.trim() || '';
   const q10Checked = Array.from(document.querySelectorAll('input[name="q10"]:checked')).map(i => i.value);
+  const q10Notes = document.getElementById('q10Notes')?.value.trim() || '';
   const q11 = document.querySelector('input[name="q11"]:checked')?.value || '';
   const q12 = document.querySelector('input[name="q12"]:checked')?.value || '';
   const q13 = document.querySelector('input[name="q13"]:checked')?.value || '';
@@ -95,14 +99,18 @@ export function extractFormAnswers() {
   return {
     patientName,
     age,
+    gender,
     q3,
     doctorDept,
     admissionReason,
     q6,
     q7: q7Checked,
+    q7Notes,
     q8,
     q9,
+    q9Notes,
     q10: q10Checked,
+    q10Notes,
     q11,
     q12,
     q13,
@@ -119,6 +127,7 @@ export function extractFormAnswers() {
 export function validateAnswers(answers) {
   if (!answers.patientName) return { valid: false, message: 'Please enter patient name.' };
   if (!answers.age) return { valid: false, message: 'Please enter patient age.' };
+  if (!answers.gender) return { valid: false, message: 'Please select patient gender.' };
   if (!answers.q3) return { valid: false, message: 'Please select room category (Q3).' };
   if (!answers.doctorDept) return { valid: false, message: 'Please enter consulting doctor & department (Q4).' };
   if (!answers.admissionReason) return { valid: false, message: 'Please enter reason for this admission (Q5).' };

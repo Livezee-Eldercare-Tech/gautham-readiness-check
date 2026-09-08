@@ -52,7 +52,7 @@
       <div class="card-body">
         <form id="readinessForm" autocomplete="off">
 
-          <!-- Row: Patient Name & Age (Q1 & Q2) -->
+          <!-- Row: Patient Name, Age & Gender (Q1 & Q2) -->
           <div class="field-row">
             <div class="field">
               <label class="fl" for="patientName"><span class="q-num">1.</span> Patient Name</label>
@@ -61,6 +61,17 @@
             <div class="field narrow">
               <label class="fl" for="age"><span class="q-num">2.</span> Age</label>
               <input type="number" id="age" name="age" min="1" max="125" placeholder="e.g. 68" required>
+            </div>
+            <div class="field narrow">
+              <label class="fl" for="gender">Gender</label>
+              <div class="select-wrapper">
+                <select id="gender" name="gender" required>
+                  <option value="" disabled selected>Select</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -170,6 +181,9 @@
                 <span class="opt-label">None</span>
               </label>
             </div>
+            <div style="margin-top: 8px;">
+              <input type="text" id="q7Notes" name="q7Notes" placeholder="Additional conditions or clinical notes (optional)">
+            </div>
           </div>
 
           <!-- Q8: Mobility -->
@@ -214,6 +228,9 @@
                 <span class="opt-label">Not sure</span>
               </label>
             </div>
+            <div style="margin-top: 8px;">
+              <input type="text" id="q9Notes" name="q9Notes" placeholder="Details of fall / decline, timing or circumstances (optional)">
+            </div>
           </div>
 
           <!-- Q10: Doctor's post-discharge instructions (multi-tick) -->
@@ -250,6 +267,9 @@
                 <div class="opt-indicator"></div>
                 <span class="opt-label">None yet</span>
               </label>
+            </div>
+            <div style="margin-top: 8px;">
+              <input type="text" id="q10Notes" name="q10Notes" placeholder="Specific post-discharge instructions / medication details (optional)">
             </div>
           </div>
 
