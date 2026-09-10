@@ -404,9 +404,31 @@
           </div>
 
           <!-- Submit CTA -->
-          <button type="submit" class="btn-run" id="submitBtn">Submit Readiness Check</button>
+          <button type="submit" class="btn-run" id="submitBtn">Review &amp; Submit</button>
 
         </form>
+      </div>
+    </div>
+
+    <!-- Review & Preview Modal (Mandatory cross-check before submission) -->
+    <div class="modal-backdrop" id="previewModal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h3>Review Patient Assessment</h3>
+            <p class="modal-subtitle">Cross-check all recorded details before final submission.</p>
+          </div>
+          <span class="badge badge-gold">Pre-Submit Verification</span>
+        </div>
+        
+        <div class="modal-body" id="previewBody">
+          <!-- Populated dynamically via app.js -->
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn-secondary" id="btnEditForm">← Edit Form</button>
+          <button type="button" class="btn-primary-confirm" id="btnConfirmSubmit">Confirm &amp; Submit</button>
+        </div>
       </div>
     </div>
 
